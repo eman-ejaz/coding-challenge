@@ -1,3 +1,8 @@
+import {
+  ACCOUNT_CATEGORY,
+  ACCOUNT_TYPE,
+  ACCOUNT_VALUE_TYPE,
+} from "./constants";
 import { AccountItem } from "./types";
 
 /**
@@ -8,7 +13,7 @@ import { AccountItem } from "./types";
  */
 export function calculateRevenue(data: AccountItem[]): number {
   return data
-    .filter((item) => item.account_category === "revenue")
+    .filter((item) => item.account_category === ACCOUNT_CATEGORY.REVENUE)
     .reduce((sum, item) => sum + item.total_value, 0);
 }
 
@@ -20,7 +25,7 @@ export function calculateRevenue(data: AccountItem[]): number {
  */
 export function calculateExpenses(data: AccountItem[]): number {
   return data
-    .filter((item) => item.account_category === "expense")
+    .filter((item) => item.account_category === ACCOUNT_CATEGORY.EXPENSE)
     .reduce((sum, item) => sum + item.total_value, 0);
 }
 
@@ -35,9 +40,15 @@ export function calculateGrossProfitMargin(
   data: AccountItem[],
   revenue: number
 ): number {
+  if (revenue === 0) {
+    throw new Error("Revenue cannot be zero.");
+  }
+
   const salesDebit = data
     .filter(
-      (item) => item.account_type === "sales" && item.value_type === "debit"
+      (item) =>
+        item.account_type === ACCOUNT_TYPE.SALES &&
+        item.value_type === ACCOUNT_VALUE_TYPE.DEBIT
     )
     .reduce((sum, item) => sum + item.total_value, 0);
   return salesDebit / revenue;
@@ -55,6 +66,9 @@ export function calculateNetProfitMargin(
   revenue: number,
   expenses: number
 ): number {
+  if (revenue === 0) {
+    throw new Error("Revenue cannot be zero.");
+  }
   return (revenue - expenses) / revenue;
 }
 
@@ -68,40 +82,50 @@ export function calculateWorkingCapitalRatio(data: AccountItem[]): number {
   const assetsDebit = data
     .filter(
       (item) =>
-        item.account_category === "assets" &&
-        item.value_type === "debit" &&
-        ["current", "bank", "current_accounts_receivable"].includes(
-          item.account_type
-        )
+        item.account_category === ACCOUNT_CATEGORY.ASSETS &&
+        item.value_type === ACCOUNT_VALUE_TYPE.DEBIT &&
+        [
+          ACCOUNT_TYPE.CURRENT,
+          ACCOUNT_TYPE.BANK,
+          ACCOUNT_TYPE.CURRENT_ACCOUNTS_RECEIVABLE,
+        ].includes(item.account_type)
     )
     .reduce((sum, item) => sum + item.total_value, 0);
 
   const assetsCredit = data
     .filter(
       (item) =>
-        item.account_category === "assets" &&
-        item.value_type === "credit" &&
-        ["current", "bank", "current_accounts_receivable"].includes(
-          item.account_type
-        )
+        item.account_category === ACCOUNT_CATEGORY.ASSETS &&
+        item.value_type === ACCOUNT_VALUE_TYPE.CREDIT &&
+        [
+          ACCOUNT_TYPE.CURRENT,
+          ACCOUNT_TYPE.BANK,
+          ACCOUNT_TYPE.CURRENT_ACCOUNTS_RECEIVABLE,
+        ].includes(item.account_type)
     )
     .reduce((sum, item) => sum + item.total_value, 0);
 
   const liabilitiesCredit = data
     .filter(
       (item) =>
-        item.account_category === "liability" &&
-        item.value_type === "credit" &&
-        ["current", "current_accounts_payable"].includes(item.account_type)
+        item.account_category === ACCOUNT_CATEGORY.LIABILITY &&
+        item.value_type === ACCOUNT_VALUE_TYPE.CREDIT &&
+        [
+          ACCOUNT_TYPE.CURRENT,
+          ACCOUNT_TYPE.CURRENT_ACCOUNTS_RECEIVABLE,
+        ].includes(item.account_type)
     )
     .reduce((sum, item) => sum + item.total_value, 0);
 
   const liabilitiesDebit = data
     .filter(
       (item) =>
-        item.account_category === "liability" &&
-        item.value_type === "debit" &&
-        ["current", "current_accounts_payable"].includes(item.account_type)
+        item.account_category === ACCOUNT_CATEGORY.LIABILITY &&
+        item.value_type === ACCOUNT_VALUE_TYPE.DEBIT &&
+        [
+          ACCOUNT_TYPE.CURRENT,
+          ACCOUNT_TYPE.CURRENT_ACCOUNTS_RECEIVABLE,
+        ].includes(item.account_type)
     )
     .reduce((sum, item) => sum + item.total_value, 0);
 

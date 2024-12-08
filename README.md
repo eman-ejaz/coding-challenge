@@ -26,35 +26,34 @@ Installation
 
 1.  **Clone the repository**:
 
-    bash
-
-    `git clone <repository-url>
-    cd <repository-folder>`
+    ```bash
+    git clone <repository-url>
+    cd <repository-folder>
+    ```
 
 2.  **Install dependencies**:
 
-    bash
-
-    `npm install`
+    ```bash
+    npm install
+    ```
 
 3.  **Build the project**:
 
-    bash
-
-    `npm run build`
+    ```bash
+    npm run build
+    ```
 
 4.  **Run the project**:
 
-    bash
-
-    `npm start`
+    ```bash
+    npm start
+    ```
 
 File Structure
 --------------
 
-bash
-
-`├── src
+```bash
+├── src
 │   ├── constants.ts        # Constants and enumerations
 │   ├── formatter.ts        # Helper functions for formatting outputs
 │   ├── helper.ts           # Utility functions (e.g., file loading)
@@ -65,16 +64,16 @@ bash
 │   └── data.json          # Sample data file (financial account data)
 ├── dist                    # Compiled output (generated after build)
 ├── package.json            # Project metadata and dependencies
-└── tsconfig.json           # TypeScript configuration file`
+└── tsconfig.json           # TypeScript configuration file
+```
 
 How to Use
 ----------
 
 1.  Place your JSON file with financial data in the `assets` folder. The file should follow this structure:
 
-    json
-
-    `{
+    ```json
+    {
       "data": [
         {
           "account_category": "revenue",
@@ -88,13 +87,14 @@ How to Use
       "connection_id": "1234",
       "user": "example_user",
       "object_creation_date": "2023-01-01"
-    }`
+    }
+    ```
 
 2.  Run the application using:
 
-    bash
-
-    `npm start`
+    ```bash
+    npm start
+    ```
 
 3.  View the calculated metrics in the console output.
 
@@ -113,25 +113,25 @@ Sum of all items categorized under `ACCOUNT_CATEGORY.EXPENSE`.
 
 Calculated as:
 
-plaintext
-
-`(Sales Debit) / Revenue`
+```plaintext
+(Sales Debit) / Revenue
+```
 
 ### Net Profit Margin
 
 Calculated as:
 
-plaintext
-
-`(Revenue - Expenses) / Revenue`
+```plaintext
+(Revenue - Expenses) / Revenue
+```
 
 ### Working Capital Ratio
 
 Calculated as:
 
-plaintext
-
-`(Current Assets - Current Liabilities) / Current Liabilities`
+```plaintext
+(Current Assets - Current Liabilities) / Current Liabilities
+```
 
 Development
 -----------
@@ -141,15 +141,16 @@ To modify or extend the project:
 1.  Edit the TypeScript files in the `src` directory.
 2.  Rebuild the project:
 
-    bash
-
-    `npm run build`
+    ```bash
+    npm run build
+    ```
 
 3.  Run the updated application:
 
-    bash
+    ```bash
 
-    `npm start`
+    npm start
+    ```
 
 Troubleshooting
 ---------------

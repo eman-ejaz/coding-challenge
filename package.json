@@ -1,15 +1,21 @@
 {
-  "name": "coding-challenge",
+  "name": "task",
   "version": "1.0.0",
-  "description": "This repo contains the instructions and the data you need to complete the _RewardPay coding challenge_.  This challenge is not intended to be complex, but it is an opportunity for you to showcase your understanding and applying of good development practices.",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc && copyfiles -u 1 ./assets/data.json dist",
+    "start": "node dist/index.js"
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  },
   "devDependencies": {
     "@types/node": "^22.10.1",
+    "copyfiles": "^2.4.1",
     "typescript": "^5.7.2"
   }
 }
